@@ -146,6 +146,18 @@ As we have deleted somethign on LR/made chnage on LR , we need to track that. So
 # ls
 File will not be in localrepo and WD
 
+========================================================
+
+Revert command in GIT
+=========================================================
+> This command is applicable only to commit id
+> using this command we cna revert the chnages of the commit to its previous state
+> but when a revert command is executed, it is chnage something on the LR, so there needs to be a commit again
+> When revert command is executed, immediatly a nano editor where user will eneter a message why we are reverting
+> save the file. Revert will be complete and a new commit id will be generated
+
+# git revert <deletioncommitid>
+
 
 
 
