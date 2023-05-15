@@ -94,7 +94,7 @@ git commit -m "adding file index1.html" <filename>
 
 ================================================
 
-6. Modify exisitng files and add those changes to local repo
+Modify exisitng files and add those changes to local repo
 ====================================================
 
 Take a file which is in local repo
@@ -113,6 +113,23 @@ To add all the modification and commit them to local repo
 
 # git commit -a -m "added modifications"
 
+=================================================
+1. Check the log for commit history
+
+# git log
+
+in this HEAD it is an object in git which represents the latest/recent commit id
+
+# git log --oneline
+
+Check commit history of every commit in a single line
+
+# git show <commid id>
+Shows what happened in that commit.
+
+See commits of a particular file:
+
+ git log --graph --all -- index1.html
 
 
 
