@@ -131,7 +131,20 @@ See commits of a particular file:
 
  git log --graph --all -- index1.html
 
+==============================================================
 
+Delete a file form LR and WD
+===================================================================
+# git rm index1.html
+
+==> this command deletes file from WD and LR
+As we have deleted somethign on LR/made chnage on LR , we need to track that. So commit the deletion
+
+# git commit -m "deleted file"
+
+# git ls-files
+# ls
+File will not be in localrepo and WD
 
 
 
