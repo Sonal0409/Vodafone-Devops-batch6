@@ -59,3 +59,5 @@ security_group_id = aws_security_group.test1.id
 network_interface_id = aws_instance.web1.primary_network_interface_id
 
 }
+
+# done
