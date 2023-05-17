@@ -208,7 +208,7 @@ $ cd /etc/ansible
 $ vim playbook3.yml
 ---
 - name: use demor role playbook
-  hosts: webservers
+  hosts: localhost
   become: true
   roles:
   - demor
