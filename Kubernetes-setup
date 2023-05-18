@@ -1,0 +1,67 @@
+On Master Node:
+
+# sudo wget https://raw.githubusercontent.com/lerndevops/labs/master/kubernetes/0-install/daemon.json -P /etc/docker
+# sudo systemctl restart docker.service
+
+Initialize kubernetes Master Node
+
+# sudo kubeadm init
+
+wait for few seconds for the task to complete.
+
+Execute these commands:
+
+  # mkdir -p $HOME/.kube
+  # sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  # sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  
+  Wait for few seconds now and execute below command:
+  
+# kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.1/manifests/calico.yaml
+
+# kubectl get nodes
+
+output will be like this:
+
+NAME               STATUS   ROLES                  AGE     VERSION
+ip-172-31-57-157   Ready    control-plane,master   2m40s   v1.23.4
+
+Execute below command on Master node get a token
+
+# sudo kubeadm token create --print-join-command
+
+Now copy the generated token in a note pad
+
+Example token will look like these:
+kubeadm join 172.31.57.157:6443 --token u1bax4.diyl7ae60dksps65 --discovery-token-ca-cert-hash sha256:4eb21a2496352ce324f2e9fe0bc7b07c73033146705c6dfb09862e8b8b5c247d 
+
+===========================================================================================================
+
+Execute below steps on Worker Node
+===========================================================================================================
+# sudo su -
+
+# hostname WORKER1
+
+# sudo su -
+
+# sudo wget https://raw.githubusercontent.com/lerndevops/labs/master/kubernetes/0-install/daemon.json -P /etc/docker
+# sudo systemctl restart docker.service
+
+Copy the token from moster node and paste on Worker node
+example
+# kubeadm join 172.31.57.157:6443 --token u1bax4.diyl7ae60dksps65 --discovery-token-ca-cert-hash sha256:4eb21a2496352ce324f2e9fe0bc7b07c73033146705c6dfb09862e8b8b5c247d 
+
+you will copy your generated token
+
+Now worker will join the master
+
+==================================================================================
+
+On master execute below command:
+
+# kubectl get nodes
+
+both master worker nodes will be there.
+
+===========================================================================
