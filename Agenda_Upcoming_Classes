@@ -52,6 +52,8 @@ Introdcution to Kubernetes Container orchestration tool
 Kubernetes Architecture and set up
 Creation of pod  using po-defination file using YAML
 Creation of multi-containaer POD in kubernetes
+Service object in Kubernetes
+Deployment object in Kubernetes
 Introduction to Continous Monitoring
 Introdcution to Nagios monitoring tool
 Introduction to ELK tool
