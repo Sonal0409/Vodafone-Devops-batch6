@@ -1,0 +1,231 @@
+Nagios SetUP:
+**********
+
+$ sudo su -
+
+RUN the below image to create a container for nagiosxi
+
+docker run -d -p 8282:80 --name nagiosxi lerndevops/nagios:xi5.5.6
+
+It is a heavy image, it will take time to create the container
+
+take externalip:80 to access nagiosxi frontend
+> click on access nagiosxi
+> set the timezone to new delhi
+> press next
+> USername=> nagiosadmin
+> password => nagiosadmin
+> give email address
+
+> click finish install
+
+> Click on login to Nagios XI
+> give username : nagiosadmin
+  password as nagiosadmin
+
+> agree on agreement and click on submit
+
+On host summary you will see 1 host, that it is monitoring itself
+
+Setup complete.
+
+==================
+Monitor a URL
+
+got to configure wizard --> select website URL
+
+give url as www.google.com
+
+press next
+
+
+we will check the url status here
+
+click on finish
+
+go to home and see 3 hosts will be there
+
+Go to reports section on top.. you can schedule reports also , send reports
+download pdf format of reports
+send as email
+
+
+You can also create dashboards
+manage dashlets to see specific data
+
+Delete nagios container
+
+$ docker rm -f nagiosxi
+=================================
+
+ELK stack - using Docker containers
+
+ELK stack setup:
+
+
+$ sudo su
+$ cd
+$ git clone https://github.com/Sonal0409/ELKExample.git
+$ cd ELKExample
+
+$ docker-compose version
+$ docker version
+
+$ sudo pip install docker-compose
+$ docker-compose version
+
+$ sysctl -w vm.max_map_count=262144
+
+
+$ sudo systemctl unmask docker
+$ wget -qO- https://get.docker.com/ | sh
+#$ sudo service docker start
+
+$ docker version
+
+
+$ docker-compose up -d
+$ docker ps
+
+
+Browse: http://localhost:5601/app/kibana
+
+Browse: http://localhost:8080
+
+
+Credential ID: dockerHub
+Install Plugin: Docker Pipeline
+
+$ chmod 777 /var/run/docker.sock
+
+
+SCM: https://github.com/Sonal0409/ELKExample.git
+
+$ docker ps
+
+Browse: http://localhost:81
+===================================================
+
+Container Orchestration with Kubernetes:
+=====================================================
+
+check if Kube Master is ready or not
+
+$ kubectl get nodes
+
+
+Create Pod, using a Pod definition file – YAML - DEMO
+
+mkdir mykubefile
+cd mykubefiles
+
+Vim pod-definition.yml
+
+apiVersion: v1
+kind: Pod
+metadata:
+ name: mypod
+ labels:
+  app: myapp
+  type: webserver
+  author: sonal
+spec:   
+ containers:
+  - name: c1
+    image: nginx
+
+$ kubectl create -f pod-defintion.yml
+
+$ kubectl get pods
+
+=========================================
+Service Object:
+================================
+vim service1.yml
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: mysvc
+spec:
+ type: NodePort
+ ports:
+  - targetPort: 80
+    port: 80
+ selector:
+  type: webserver
+  
+  # kubectl create -f service1.yml
+  
+  # kubectl get all --all
+  
+  Go to desktop of Master node. in the browser give localhost:Nodeportnumber
+===================================
+ Deployment:
+
+Vim deploymentdemo.yml
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: kubeserve
+spec:
+  replicas: 3
+  minReadySeconds: 10 # wait for 45 sec before going to deploy next pod
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1  
+      maxSurge: 1        # max number of pods to run for the deployment
+  selector:
+    matchLabels:
+      app: kubeserve
+  template:
+    metadata:
+      name: kubeserve
+      labels:
+        app: kubeserve
+    spec:
+      containers:
+       - name: app
+         image: leaddevops/kubeserve:v1
+        
+---
+kind: Service
+apiVersion: v1
+metadata:
+   name: kubeserve-svc
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+  selector: 
+    app: kubeserve
+     
+
+$ kubectl create -f <filename>
+
+$ kubectl get all
+
+$ kubectl get deployment kubeserve -o wide
+
+Update the image of the deployment
+
+$ kubectl set image deployment kubeserve app=leaddevops/kubeserve:v2
+
+$ kubectl rollout history deployment kubeserve
+
+=============================================
+Roll back the deployment to previous version
+
+$ kubectl rollout undo deployment kubeserve
+
+
+Roll back to a particular revision
+
+kubectl rollout undo deployment kubeserve --to-revision=1
+
+$ kubectl describe deployment kubeserve
+
+
