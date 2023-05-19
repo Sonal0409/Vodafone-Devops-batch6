@@ -77,9 +77,7 @@ $ docker-compose version
 $ sysctl -w vm.max_map_count=262144
 
 
-$ sudo systemctl unmask docker
-$ wget -qO- https://get.docker.com/ | sh
-#$ sudo service docker start
+
 
 $ docker version
 
